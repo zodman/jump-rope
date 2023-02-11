@@ -13,7 +13,7 @@
   <body
     x-data="{increment:20, counter:0, stops:[], seconds:0 }"
     @keyup.space="counter+=increment; stops.push(new Date()); seconds=0;"
-    x-init='setInterval(()=>seconds+=1, 1000)'
+    x-init="setInterval(()=>seconds+=1, 1000)"
   >
     <section class="container is-fluid">
       <div class="columns">
@@ -41,11 +41,13 @@
           </div>
         </div>
       </div>
-      <section class="container has-text-centered title mt-6">
-        Jumps:
-        <span x-text="counter"> </span>
-        <div>
-            <span x-text='seconds'></span>
+      <section class="has-text-centered title mt-6">
+        <div class="hero is-danger">
+          <div class="hero-body">
+            Jumps:
+            <span x-text="counter"> </span>
+            <div class="subtitle"><span x-text="seconds"></span> seconds</div>
+          </div>
         </div>
       </section>
       <section class="container has-text-centered subtitle mt-6">
@@ -57,8 +59,8 @@
                     Math.round((stop.getTime() - stops[index-1].getTime())/1000)
                     :
                     0"
-              ></span>secs. 
-              <span x-text="index*increment"></span> jumps
+              ></span
+              >secs. <span x-text="index*increment"></span> jumps
             </li>
           </template>
         </ul>
