@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jump the Rope</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css"
+    />
+    <script src="//unpkg.com/alpinejs" defer></script>
+  </head>
+  <body
+    x-data="{increment:20, counter:0, stops:[], seconds:0 }"
+    @keyup.space="counter+=increment; stops.push(new Date()); seconds=0;"
+    x-init='setInterval(()=>seconds+=1, 1000)'
+  >
+    <section class="container is-fluid">
+      <div class="columns">
+        <div class="column">
+          <span class="title">Jump the rope</span>
+        </div>
+        <div class="column">
+          <div class="field">
+            <label for="">Increment</label>
+            <div class="control">
+              <input type="text" name="" class="input" x-model="increment" />
+              <button
+                class="button is-warning mt-3 is-small"
+                @click="counter-=increment; stops.pop(); seconds=0;"
+              >
+                -
+              </button>
+              <button
+                class="button is-success mt-3 mx-6 is-small"
+                @click="counter+=increment; stops.push(new Date()); seconds=0;"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section class="container has-text-centered title mt-6">
+        Jumps:
+        <span x-text="counter"> </span>
+        <div>
+            <span x-text='seconds'></span>
+        </div>
+      </section>
+      <section class="container has-text-centered subtitle mt-6">
+        <ul>
+          <template x-for="(stop, index) in stops">
+            <li>
+              <span
+                x-text="stops.length ? 
+                    Math.round((stop.getTime() - stops[index-1].getTime())/1000)
+                    :
+                    0"
+              ></span>secs. 
+              <span x-text="index*increment"></span> jumps
+            </li>
+          </template>
+        </ul>
+      </section>
+    </section>
+  </body>
+</html>
