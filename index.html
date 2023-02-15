@@ -59,7 +59,7 @@
           <div>
             Press spacebar for increment
           </div>
-        <div class="hero is-danger">
+        <div class="hero is-danger is-medium">
           <div class="hero-body">
             Jumps:
             <span x-text="counter"> </span>
@@ -67,6 +67,7 @@
           </div>
         </div>
       </section>
+      <progress class="progress is-primary is-large" x-bind:value="counter" max="1000"></progress>
     </section>
   </body>
 </html>
