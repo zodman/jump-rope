@@ -11,29 +11,43 @@
     <script src="//unpkg.com/alpinejs" defer></script>
   </head>
   <body
-    x-data="{increment:20, counter:0, stops:[], seconds:0 }"
-    @keyup.space="counter+=increment; stops.push(new Date()); seconds=0;"
+    x-data="{
+    increment:20, counter:0, stops:[], seconds:0, 
+    decr(){ 
+        this.counter-= parseInt(this.increment); 
+        stops.pop(); 
+        seconds=0; 
+    }, 
+    inc(){ 
+        this.counter+=parseInt(this.increment); 
+        this.stops.push(new Date()); 
+        this.seconds=0; 
+        return false;
+    } 
+    }"
+    @keyup.space.prevent="inc"
     x-init="setInterval(()=>seconds+=1, 1000)"
   >
     <section class="container is-fluid">
       <div class="columns">
         <div class="column">
-          <span class="title">Jump the rope</span>
+          <div class="hero is-success">
+            <div class="hero-body">
+              <span class="title">Jump the rope</span>
+            </div>
+          </div>
         </div>
         <div class="column">
           <div class="field">
             <label for="">Increment</label>
             <div class="control">
               <input type="text" name="" class="input" x-model="increment" />
-              <button
-                class="button is-warning mt-3 is-small"
-                @click="counter-=increment; stops.pop(); seconds=0;"
-              >
+              <button class="button is-warning mt-3 is-big" @click="decr">
                 -
               </button>
               <button
-                class="button is-success mt-3 mx-6 is-small"
-                @click="counter+=increment; stops.push(new Date()); seconds=0;"
+                class="button is-success mt-3 mx-6 is-big"
+                @click="inc()"
               >
                 +
               </button>
@@ -41,7 +55,10 @@
           </div>
         </div>
       </div>
-      <section class="has-text-centered title mt-6">
+      <section class="has-text-centered title">
+          <div>
+            Press spacebar for increment
+          </div>
         <div class="hero is-danger">
           <div class="hero-body">
             Jumps:
@@ -49,21 +66,6 @@
             <div class="subtitle"><span x-text="seconds"></span> seconds</div>
           </div>
         </div>
-      </section>
-      <section class="container has-text-centered subtitle mt-6">
-        <ul>
-          <template x-for="(stop, index) in stops">
-            <li>
-              <span
-                x-text="stops.length ? 
-                    Math.round((stop.getTime() - stops[index-1].getTime())/1000)
-                    :
-                    0"
-              ></span
-              >secs. <span x-text="index*increment"></span> jumps
-            </li>
-          </template>
-        </ul>
       </section>
     </section>
   </body>
